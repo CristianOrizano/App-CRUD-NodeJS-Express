@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: node_back
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3307:3306"  # Mapea el puerto 3307 de la máquina al puerto 3306 del contenedor
+    networks:
+      - my_network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    env_file: .env
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules  # Volumen nombrado para /app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - my_network
+ 
+volumes:
+  mysql_data:
+    driver: local # Guarda los datos del volumen mysql_data en el sistema de archivos del host
+  node_modules:  # Definir el volumen 'node_modules' aquí
+    driver: local
+
+networks:
+  my_network:
+    driver: bridge

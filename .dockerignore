@@ -1,0 +1,18 @@
+# Ignorar node_modules (porque las dependencias se instalan en el contenedor)
+node_modules
+
+# Ignorar el archivo .env, si no es necesario dentro del contenedor
+.env
+
+# Ignorar archivos temporales o de compilación
+*.log
+*.tmp
+*.swp
+
+# Ignorar archivos de configuración locales
+.vscode/
+.idea/
+
+# Ignorar carpetas de prueba o documentación
+test/
+docs/
